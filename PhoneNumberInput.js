@@ -47,10 +47,12 @@ export default class PhoneNumberInput extends React.Component {
     const re = new RegExp(this.phoneRegexStr.slice(0, 2 * number.length).replace(/\s/g, ''));
 
     if (re.test(number)) {
+
       this.setState({
         number: number,
         ready: number.length === 12
       });
+      
     }
   }
 
@@ -60,20 +62,22 @@ export default class PhoneNumberInput extends React.Component {
 
     /* 10.0.2.2	is a special alias to the loopback interface,
        (i.e., 127.0.0.1 on your development machine) */
-    fetch("http://10.0.2.2:5000/phone-registration", {
+    fetch("http://10.0.2.2:5000/api/phone-registration", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        phoneNumber: this.state.number
+        PhoneNumber: this.state.number
       })
     }).then(() => {
           return navigate("Verify");
         }
     ).catch((error) => {
+    //test
       console.error(error);
+
     });
   }
 
