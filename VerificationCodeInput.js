@@ -35,8 +35,11 @@ export default class VerificationCodeInput extends React.Component {
    * @param accessCode
    */
   onChange(accessCode) {
-    this.state.number
-    const re = new RegExp(this.codeRegexStr.slice(0, 2 * number.length).replace(/\s/g, ''));
+
+    const {navigate} = this.props.navigation;
+
+
+    const re = new RegExp(this.codeRegexStr.slice(0, 2 * accessCode.length).replace(/\s/g, ''));
 
     if (re.test(accessCode)) {
       this.setState({
@@ -44,28 +47,30 @@ export default class VerificationCodeInput extends React.Component {
       });
     }
 
-    if (accessCode.length === 5 && !this.attemptedCodes.has(accessCode)) {
+    if (accessCode.length === 5) {
 
-      fetch("http://10.0.2.2:5000/api/verify-phone", {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          AccessCode: this.state.number
-        })
-      }).then(
-          (response) => {
-            return navigate("Verify");
-          }
-      ).catch((error) => {
+      navigate("Requisition");
 
-        console.error(error);
-      });
+      // fetch("http://10.0.2.2:5000/api/verify-phone", {
+      //   method: 'POST',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     AccessCode: this.state.number
+      //   })
+      // }).then(
+      //     (response) => {
+      //       return reactigate("Verify");
+      //     }
+      // ).catch((error) => {
+      //
+      //   console.error(error);
+      // });
     }
 
-    this.attemptedCodes.add(accessCode)
+    // this.attemptedCodes.add(accessCode)
 
   }
 

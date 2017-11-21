@@ -52,7 +52,7 @@ export default class PhoneNumberInput extends React.Component {
         number: number,
         ready: number.length === 12
       });
-      
+
     }
   }
 
@@ -60,25 +60,28 @@ export default class PhoneNumberInput extends React.Component {
 
     const {navigate} = this.props.navigation;
 
+    navigate("Verify");
+
     /* 10.0.2.2	is a special alias to the loopback interface,
        (i.e., 127.0.0.1 on your development machine) */
-    fetch("http://10.0.2.2:5000/api/phone-registration", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        PhoneNumber: this.state.number
-      })
-    }).then(() => {
-          return navigate("Verify");
-        }
-    ).catch((error) => {
-    //test
-      console.error(error);
+    // fetch("http://10.0.2.2:5000/api/phone-registration", {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     PhoneNumber: this.state.number
+    //   })
+    // }).then(() => {
+    //       return navigate("Verify");
+    //     }
+    // ).catch((error) => {
+    //   //test
+    //   console.error(error);
+    //
+    // });
 
-    });
   }
 
   /**
