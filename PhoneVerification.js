@@ -49,7 +49,7 @@ export default class VerificationCodeInput extends React.Component {
 
     if (accessCode.length === 5) {
 
-      navigate("Requisition");
+      navigate("LocationSelector");
 
       // fetch("http://10.0.2.2:5000/api/verify-phone", {
       //   method: 'POST',

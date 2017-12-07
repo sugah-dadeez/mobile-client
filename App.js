@@ -3,16 +3,20 @@
  */
 
 import React, {Component} from 'react';
-import PhoneNumberInput from './PhoneNumberInput';
-import VerificationCodeInput from './VerificationCodeInput';
-import RequisitionHauler from "./RequisitionHauler";
+import UserSignin from './UserSignin';
+import LocationSelector from "./LocationSelector";
+import UserRegistration from "./UserRegistration";
+import MoverHome from "./MoverHome";
 
 import {StackNavigator} from 'react-navigation';
+import DetailEntry from "./DetailEntry";
 
 const AppNavigator = StackNavigator({
-  SignIn: {screen: PhoneNumberInput},
-  Verify: {screen: VerificationCodeInput},
-  Requisition: {screen: RequisitionHauler},
+  SignIn: {screen: UserSignin},
+  SignUp: {screen: UserRegistration},
+  SelectLocation: {screen: LocationSelector},
+  EnterDetails: {screen: DetailEntry},
+  MoverHome: {screen: MoverHome}
 }, {
   mode: 'modal',
   navigationOptions: {

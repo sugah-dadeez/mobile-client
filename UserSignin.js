@@ -1,20 +1,24 @@
 /**
- * PhoneNumberInput Component
+ * UserSignin Component
  */
 
 import React from 'react';
+import RestClient from './RestClient';
 import {
   StyleSheet,
   View,
   TextInput,
-  Button
+  Button,
+  Text,
+  Dimensions,
+  Keyboard
 } from 'react-native';
 
 
 /**
  *
  */
-export default class PhoneNumberInput extends React.Component {
+export default class UserSignin extends React.Component {
   /**
    *
    * @param props
@@ -25,6 +29,7 @@ export default class PhoneNumberInput extends React.Component {
 
     this.state = {
       number: "",
+      password: "",
       ready: false
     };
   }
@@ -56,32 +61,19 @@ export default class PhoneNumberInput extends React.Component {
     }
   }
 
-  onSubmit() {
+  onLogin() {
 
-    const {navigate} = this.props.navigation;
+    Keyboard.dismiss();
+    RestClient.login({
+      username: this.state.number,
+      password: this.state.password
+    }, () => {
+      return this.props.navigation.navigate("MoverHome");
+    })
+  }
 
-    navigate("Verify");
-
-    /* 10.0.2.2	is a special alias to the loopback interface,
-       (i.e., 127.0.0.1 on your development machine) */
-    // fetch("http://10.0.2.2:5000/api/phone-registration", {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     PhoneNumber: this.state.number
-    //   })
-    // }).then(() => {
-    //       return navigate("Verify");
-    //     }
-    // ).catch((error) => {
-    //   //test
-    //   console.error(error);
-    //
-    // });
-
+  onDoSignup() {
+    this.props.navigation.navigate("SignUp")
   }
 
   /**
@@ -96,12 +88,30 @@ export default class PhoneNumberInput extends React.Component {
               maxLength={12}
               keyboardType={"phone-pad"}
               style={{width: 175, textAlign: 'center'}}
-              placeholder="Enter Your Phone Number"
+              placeholder="Phone Number"
               onChangeText={(number) => this.onChange(number)}
               value={this.state.number}/>
+
+          <TextInput
+              maxLength={30}
+              style={{width: 175, textAlign: 'center'}}
+              placeholder="Password"
+              secureTextEntry={true}
+
+              onChangeText={(password) => this.setState({password: password})}
+              value={this.state.password}/>
+
           <Button disabled={!this.state.ready}
-                  title={"Submit"}
-                  onPress={() => this.onSubmit()}/>
+                  title={"Login"}
+                  onPress={() => this.onLogin()}/>
+
+          <View style={styles.signupArea}>
+
+            <Text style={{fontWeight: 'bold'}}>New User?</Text>
+            <Button disabled={false}
+                    title={"Sign up Now!"}
+                    onPress={() => this.onDoSignup()}/>
+          </View>
         </View>
     );
   }
@@ -114,4 +124,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  signupArea: {
+    position: 'absolute',
+    height: 100,
+    left: 0,
+    right: 0,
+    top: (Dimensions.get('window').height - 150),
+    padding: 20,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  }
 });
