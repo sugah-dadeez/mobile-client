@@ -51,23 +51,7 @@ export default class VerificationCodeInput extends React.Component {
 
       navigate("LocationSelector");
 
-      // fetch("http://10.0.2.2:5000/api/verify-phone", {
-      //   method: 'POST',
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     AccessCode: this.state.number
-      //   })
-      // }).then(
-      //     (response) => {
-      //       return reactigate("Verify");
-      //     }
-      // ).catch((error) => {
-      //
-      //   console.error(error);
-      // });
+
     }
 
     // this.attemptedCodes.add(accessCode)

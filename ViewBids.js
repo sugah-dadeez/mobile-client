@@ -88,9 +88,6 @@ export default class MoverHome extends React.Component {
 
   updateData = (jobData) => {
 
-
-    ToastAndroid.showWithGravity(JSON.stringify(jobData), ToastAndroid.SHORT, ToastAndroid.CENTER);
-
     this.setState({
       bids: jobData.bids,
       jobId: jobData.id
@@ -100,6 +97,16 @@ export default class MoverHome extends React.Component {
   render() {
     return (
         <View>
+          {!this.state.jobs &&
+          <View style={{padding: 40}}>
+            <Text style={{
+              fontSize: 24,
+              textAlign: 'center'
+            }}>
+              No Bids Yet. Hang in there...
+            </Text>
+          </View>}
+
           <FlatList
               data={this.state.bids.map((item) => ({
                 bid: item,

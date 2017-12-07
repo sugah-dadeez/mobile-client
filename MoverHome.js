@@ -82,14 +82,7 @@ export default class MoverHome extends React.Component {
   }
 
   /**
-   * {
-        "bids": [],
-        "id": 2,
-        "is_driver": true,
-        "is_verified": true,
-        "jobs": [],
-        "username": "703-732-7111"
-    }
+   *
    * @param userData
    */
 
@@ -100,42 +93,51 @@ export default class MoverHome extends React.Component {
   render() {
     return (
         <View>
+          {(this.state.jobs.length === 0) &&
+          <View style={{padding: 40}}>
+            <Text style={{
+              fontSize: 24,
+              textAlign: 'center'
+            }}>
+              It Doesn't Look Like You've Done Anything Yet...
+            </Text>
+          </View>}
           <View style={{padding: 20}}>
             <Button
                 title={'Post a Haul Job!'}
                 onPress={() => {
-
                   this.props.navigation.navigate("SelectLocation");
-
                 }}/>
           </View>
+          <ScrollView>
+            <FlatList
+                data={this.state.jobs.map((item) => ({
+                  job: item,
+                  key: item.id
+                }))}
+                key={'id'}
+                renderItem={({item}) => {
 
-          <FlatList
-              data={this.state.jobs.map((item) => ({
-                job: item,
-                key: item.id
-              }))}
-              key={'id'}
-              renderItem={({item}) => {
 
+                  return (
 
-                return (
+                      <View style={{padding: 5}}>
+                        <JobDisplay
+                            job={item.job}
+                            navigation={this.props.navigation}/></View>)
 
-                    <View style={{padding: 5}}>
-                      <JobDisplay
-                          job={item.job}
-                          navigation={this.props.navigation}/></View>)
-
-              }}/>
+                }}/>
+          </ScrollView>
         </View>);
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  }
-});
+const
+    styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+      }
+    });

@@ -24,11 +24,12 @@ export default class RestClient {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials)
-    }).then((response) => response.json()).then((responseJSON) => {
-
-      callback();
+    }).then((response) => {
+      response.json()
+    }).then((responseJSON) => {
+      callback(responseJSON);
     }).catch((error) => {
-      ToastAndroid.show("Error! Bleep! Bloop! Blop!", ToastAndroid.CENTER)
+      ToastAndroid.show("Error! Bleep! Bloop! Blop!", ToastAndroid.CENTER);
     });
   }
 
@@ -63,7 +64,6 @@ export default class RestClient {
       return;
     }
 
-    ToastAndroid.show(`${method},${resource}`, ToastAndroid.CENTER);
     fetch(`http://${hostname}${resource}`, {
       method: method,
       headers: {
@@ -75,7 +75,6 @@ export default class RestClient {
 
 
       return response.json()
-
     }).then(responseJSON => {
 
       if (callback) {

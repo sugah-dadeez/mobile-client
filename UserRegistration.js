@@ -83,7 +83,7 @@ export default class UserRegistration extends React.Component {
       "password": this.state.password1,
       "is_verified": true,
       "is_driver": true
-    }, () => {
+    }, (response) => {
       this.props.navigation.navigate("SignIn")
     })
   }
