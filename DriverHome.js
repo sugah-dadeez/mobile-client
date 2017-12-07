@@ -17,6 +17,10 @@ import {
 class JobDisplay extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      bidAmount: "0"
+    }
   }
 
   render() {
@@ -24,7 +28,6 @@ class JobDisplay extends React.Component {
     let job = this.props.job;
 
     return (
-
         <View style={{
           flex: 1,
           flexDirection: 'column',
@@ -45,36 +48,53 @@ class JobDisplay extends React.Component {
               numberOfLines={3}>
             {job.dropoff_address}
           </Text>
-          <Text>
-            {(job.winner_id) ? 'This Haul Auction Is Over' : 'The Bids Are Comin In!'}</Text>
+
+          <Text
+              style={{
+                fontSize: 18,
+                paddingTop: 10
+              }}>
+            {job.square_feet} Square Feet
+          </Text>
+
           <View style={{
+            paddingTop: 30,
             flex: 1,
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
           }}>
+            <TextInput
+                style={{width: 100}}
+                placeholder={'Enter a Bid'}
+                value={this.state.bidAmount}
+                keyboardType={'numeric'}
+                onChangeText={(amount) => this.setState({bidAmount: amount})}/>
             <Button
                 style={{
-                  paddingTop: 20,
                   fontSize: 14,
-                  fontWeight: 'bold',
                 }}
-                title={'View Bids'}
+                disabled={!(this.state.bidAmount > 0)}
+                title={'Bid Now!'}
                 onPress={() => {
-                  this.props.navigation.navigate("ViewBids", {jobId: job.id})
+                  RestClient.call('POST', `/job/${job.id}/bid/`, (response) => {
+                        ToastAndroid.show("Your Bid Has Been Processed", ToastAndroid.CENTER)
+                      },
+                      {amount: this.state.bidAmount})
                 }}/>
           </View>
         </View>);
+
   }
 }
 
 /**
  *
  */
-export default class MoverHome extends React.Component {
+export default class DriverHome extends React.Component {
   constructor(props) {
     super(props);
 
-    RestClient.call('GET', '/user/', this.updateData);
+    RestClient.call('GET', '/job/', this.updateData);
     this.state = {
       ready: false,
       jobs: []
@@ -93,22 +113,15 @@ export default class MoverHome extends React.Component {
    * @param userData
    */
 
-  updateData = (userData) => {
-    this.setState({jobs: userData.jobs});
+  updateData = (jobsData) => {
+
+    this.setState({jobs: jobsData});
+
   };
 
   render() {
     return (
         <View>
-          <View style={{padding: 20}}>
-            <Button
-                title={'Post a Haul Job!'}
-                onPress={() => {
-
-                  this.props.navigation.navigate("SelectLocation");
-
-                }}/>
-          </View>
 
           <FlatList
               data={this.state.jobs.map((item) => ({

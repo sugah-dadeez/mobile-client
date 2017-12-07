@@ -81,8 +81,8 @@ export default class UserRegistration extends React.Component {
     RestClient.signup({
       "username": this.state.number,
       "password": this.state.password1,
-      "is_verified": false,
-      "is_driver": false
+      "is_verified": true,
+      "is_driver": true
     }, () => {
       this.props.navigation.navigate("SignIn")
     })

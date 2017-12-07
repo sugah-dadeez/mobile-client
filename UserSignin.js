@@ -11,7 +11,8 @@ import {
   Button,
   Text,
   Dimensions,
-  Keyboard
+  Keyboard,
+  CheckBox
 } from 'react-native';
 
 
@@ -30,6 +31,7 @@ export default class UserSignin extends React.Component {
     this.state = {
       number: "",
       password: "",
+      isDriver: false,
       ready: false
     };
   }
@@ -68,7 +70,7 @@ export default class UserSignin extends React.Component {
       username: this.state.number,
       password: this.state.password
     }, () => {
-      return this.props.navigation.navigate("MoverHome");
+      return this.props.navigation.navigate((this.state.isDriver) ? "DriverHome" : "MoverHome");
     })
   }
 
@@ -100,7 +102,15 @@ export default class UserSignin extends React.Component {
 
               onChangeText={(password) => this.setState({password: password})}
               value={this.state.password}/>
-
+          <View style={styles.driverCheckArea}>
+            <Text>I'm A Driver!</Text>
+            <CheckBox
+                value={this.state.isDriver}
+                onValueChange={() => {
+                  this.setState({isDriver: !this.state.isDriver})
+                }}
+            />
+          </View>
           <Button disabled={!this.state.ready}
                   title={"Login"}
                   onPress={() => this.onLogin()}/>
@@ -136,5 +146,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  driverCheckArea: {
+
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

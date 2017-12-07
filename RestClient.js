@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 
-const hostname = "10.0.2.2:8080";// 10.0.2.2	is an alias to the loopback interface, (i.e., 127.0.0.1)
+const hostname = "35.227.123.46:80";// 10.0.2.2	is an alias to the loopback interface, (i.e., 127.0.0.1)
 //35.227.123.46
 
 export default class RestClient {
@@ -63,6 +63,7 @@ export default class RestClient {
       return;
     }
 
+    ToastAndroid.show(`${method},${resource}`, ToastAndroid.CENTER);
     fetch(`http://${hostname}${resource}`, {
       method: method,
       headers: {
